@@ -10,7 +10,7 @@ jobs:
                         - name: docker login
                           run: docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_PASSWORD}}
                         - name: Build the Docker images
-                          run: docker build . --file Dockerfile --tag Alexander96pz/PruebasCI
+                          run: docker build . --file Dockerfile --tag alexander96pz/pruebas
                         - name: publish to dockerhub
                           run: docker push ${{secrets.DOCKERHUB_USERNAME}}/pruebas
                           #         uses: docker/build-push-action@v1
