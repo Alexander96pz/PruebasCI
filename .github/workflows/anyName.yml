@@ -15,15 +15,20 @@ jobs:
                                 cache: maven
                         - name: build jar
                           run: mvn -B package --file pom.xml
-                        - name: docker login
-                          run: docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_PASSWORD}}
+                        #- name: docker login
+                        #  run: docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_PASSWORD}}
                         - name: Build the Docker images
-                          run: docker build . --tag alexander96pz/pruebas
-                        - name: publish to dockerhub
-                          run: docker push ${{secrets.DOCKERHUB_USERNAME}}/pruebas
-                          #         uses: docker/build-push-action@v1
-                          #with:
-                          #       username: ${{ secrets.DOCKERHUB_USERNAME }}
-                          #       password: ${{ secrets.DOCKERHUB_PASSWORD }}
-                          #       repository: alexander96pz/pruebaci
-                          #tags: ${{ github.sha }}
+                        #  run: docker build . --tag alexander96pz/pruebas
+                        #- name: publish to dockerhub
+                        #  run: docker push ${{secrets.DOCKERHUB_USERNAME}}/pruebas
+                        #  tag_with_ref: true
+                          
+                          uses: docker/build-push-action@v1
+                          with:
+                                 username: ${{ secrets.DOCKERHUB_USERNAME }}
+                                 password: ${{ secrets.DOCKERHUB_PASSWORD }}
+                                 # repository: alexander96pz/pruebaci
+                                 repository: ${{github.repository}}
+                                 tag_with_ref: true
+                                 tag_with_sha: true
+                                 tags: ${{ github.sha }}
